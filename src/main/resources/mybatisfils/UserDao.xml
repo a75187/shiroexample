@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.security.shiro.shiroexample.dao.UserDao">
+	<resultMap id="userModelResult" type="com.security.shiro.shiroexample.bean.User">
+
+		<result property="username" column="username"/>
+		<result property="password" column="password"/>
+		<result property="email" column="email"/>
+		<result property="type" column="type"/>
+		<result property="updatetim" column="updatetim"/>
+		<result property="regdate" column="regdate"/>
+ 	</resultMap>
+
+	<insert id="insertUser" parameterType="com.security.shiro.shiroexample.bean.User">
+		insert into user.user(id,username,password,email,type,updatetim,regdate,is_delete)
+			 values(uuid(),#{username},#{password},#{email},#{type},#{updatetim},#{regdate},#{isDelete})
+	</insert>
+
+	<select id="selectUser" parameterType="String"  resultMap="userModelResult">
+			 SELECT  *  FROM  user u  where u.id='1'
+	</select>
+
+	<select id="selectListUser" resultMap="userModelResult">
+			 SELECT  *  FROM  user u
+	</select>
+
+
+</mapper>
