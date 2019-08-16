@@ -19,7 +19,7 @@
 	</insert>
 
 	<select id="selectUser" parameterType="String"  resultMap="userModelResult">
-			 SELECT  *  FROM  user u  where u.id='1'
+			 SELECT  *  FROM  user u  where u.username=#{name}
 	</select>
 
 	<select id="selectListUser" resultMap="userModelResult">

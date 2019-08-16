@@ -6,6 +6,7 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresRoles;
+import org.apache.shiro.authz.permission.WildcardPermission;
 import org.apache.shiro.subject.Subject;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,14 +29,19 @@ public class UserController {
     private UserService service;
 
     @GetMapping(value = "/pickUserName")
+    @RequiresRoles(value = {"user","admin"})
     public String pickUserName(HttpServletRequest req){
         return  SecurityUtils.getSubject().getPrincipal().toString();
     }
 
     @GetMapping(value = "/pickPassword")
-    @RequiresRoles("admin")
+    //满足 admin或user 角色 且有read权限的
+   //@RequiresPermissions(value = {"admin:read","user:read"},logical =Logical.OR)
     public String pickPassword(HttpServletRequest req){
         Subject subject = SecurityUtils.getSubject();
+        boolean user = subject.isPermitted("read");
+            WildcardPermission wildcardPermission = new WildcardPermission("2:1");
+        boolean permitted = subject.isPermitted(wildcardPermission);
         if(subject.getPrincipal()==null){
             throw new RuntimeException("未登陆");
         }
@@ -45,8 +51,8 @@ public class UserController {
 //一下jdbc 领域实现
 
     @GetMapping("/query")
-    public String query(){
-        return  service.query().toString();
+    public String query(String id){
+        return  service.query(id).toString();
     };
 
 

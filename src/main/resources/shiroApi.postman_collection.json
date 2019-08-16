@@ -1,0 +1,96 @@
+{
+	"variables": [],
+	"info": {
+		"name": "shiroApi",
+		"_postman_id": "1bb9ce72-3e06-484c-83cc-a4d9ebf1f79f",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "登录",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8080/open/login?username=user&password=password",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"open",
+						"login"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "user",
+							"equals": true
+						},
+						{
+							"key": "password",
+							"value": "password",
+							"equals": true
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "pickUserName",
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": {
+						"accessToken": "10.251.92.26",
+						"tokenType": ""
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": "http://localhost:8080/security/pickUserName",
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "pickPassword",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": "http://localhost:8080/security/pickPassword",
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "注销",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": "http://localhost:8080/open/loginOut",
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "listQuery",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": "http://localhost:8080/security/listQuery",
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

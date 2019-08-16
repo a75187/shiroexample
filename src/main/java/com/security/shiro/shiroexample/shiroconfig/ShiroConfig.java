@@ -1,9 +1,8 @@
 package com.security.shiro.shiroexample.shiroconfig;
 
+import com.security.shiro.shiroexample.service.UserService;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.realm.Realm;
-import org.apache.shiro.realm.text.PropertiesRealm;
-import org.apache.shiro.realm.text.TextConfigurationRealm;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
@@ -23,9 +22,9 @@ import org.springframework.web.filter.DelegatingFilterProxy;
 @Configuration
 public class ShiroConfig {
     @Bean
-    public SecurityManager securityManager() {
+    public SecurityManager securityManager(UserService service) {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
-        securityManager.setRealm(realm());
+        securityManager.setRealm(realm(service));
         return securityManager;
     }
 
@@ -38,17 +37,23 @@ public class ShiroConfig {
         return shiroFilterFactoryBean;
     }
 
-    @Bean
+   /* @Bean
     public Realm realm() {
         //添加内存用户本地
-        UserRealm realm = new UserRealm();
+         UserRealm realm = new UserRealm();
         realm.addAccount("admin","password","admin");
         realm.addAccount("user","password","user");
         realm.addRole("admin");
         realm.addRole("user");
         realm.setCachingEnabled(true);
         return realm;
-    }
+    }*/
+
+   public Realm realm(UserService service){
+       MyJdbcRealm myJdbcRealm = new MyJdbcRealm();
+       myJdbcRealm.userService=service;
+       return myJdbcRealm;
+   }
 
     @Bean
     public FilterRegistrationBean delegatingFilterProxy(){

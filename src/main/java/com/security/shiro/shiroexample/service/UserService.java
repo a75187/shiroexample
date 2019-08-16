@@ -17,9 +17,9 @@ import java.util.List;
 @Service
 public class UserService{
     @Resource
-    private UserDao dao;
-    public User query(){
-        User user = dao.selectUser("1");
+    public UserDao dao;
+    public User query(String id){
+        User user = dao.selectUser(id);
         return user;
     }
 
